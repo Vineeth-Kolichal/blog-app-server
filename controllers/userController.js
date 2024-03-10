@@ -3,8 +3,9 @@ const models = require("../models")
 const Validator = require("fastest-validator");
 const bcrypt = require('bcryptjs')
 const jwt=require("jsonwebtoken");
-
 const { sendErrorResponse } = require("../helper/errorHelper");
+
+const secret="secret"
 const v = new Validator();
 const signUp = (req, res) => {
     const details = {
@@ -83,7 +84,10 @@ const login=(req,res)=>{
             if(user){
                 bcrypt.compare(credentials.password,user.password,(err,result)=>{
                     if(result){
-                        res.status(200).json("successfully logged in")
+                       
+                        const token=jwt.sign({email:user.email,id:user.id},secret)
+                        res.status(200).json({message:"successfully logged in",token:token})
+
                     }else{
                         sendErrorResponse(res,400,"Password is wrong")
                     }

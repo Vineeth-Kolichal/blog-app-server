@@ -1,9 +1,83 @@
-
 openapi: 3.0.0
 info:
   title: Blog app api
   description: This is a sample project with Node.js, express, MySql2, Sequelize
   version: 1.0.0
+  contact:
+    name: Vineeth Chandran
+    email: vineethchandran5898@gmail.com
+    url: https://vineethchandran.live
 servers:
   - url: http://localhost:3000/api
     description: Localhost
+paths:
+  /user/signUp:
+    post:
+      tags:
+        - User Auth
+      summary: SignUp new user
+      consumes:
+        - application/json
+      description: provide full name, email and password as body
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - password
+              properties:
+                name:
+                  type: string
+                  description: The user's full name
+                  example: Vineeth Chandran
+                email:
+                  type: string
+                  description: The user's email address
+                  format: email
+                  example: vineeth@gmail.com
+                password:
+                  type: string
+                  description: The user's password
+                  example: vineeth1234
+
+      responses:
+        "201":
+          description: If user is created successfully
+        "409":
+          description: Conflict- if email is already registered
+        "500":
+          description: Internal server error
+  /user/login:
+    post:
+      tags:
+        - User Auth
+      summary: Login with credential
+      description: user can login using emailid and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  description: The user's email address
+                  format: email
+                  example: vineeth@gmail.com
+                password:
+                  type: string
+                  description: The user's password
+                  example: vineeth1234
+
+      responses:
+        "200":
+          description: If user logged in successfully
+        
