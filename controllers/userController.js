@@ -2,6 +2,7 @@
 const models = require("../models")
 const Validator = require("fastest-validator");
 const bcrypt = require('bcryptjs')
+const jwt=require("jsonwebtoken");
 
 const { sendErrorResponse } = require("../helper/errorHelper");
 const v = new Validator();
