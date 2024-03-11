@@ -7,9 +7,12 @@ info:
     name: Vineeth Chandran
     email: vineethchandran5898@gmail.com
     url: https://vineethchandran.live
+#Available servers
 servers:
   - url: http://localhost:3000/api
     description: Localhost
+
+  #Bearer token releted section
 components:
   securitySchemes:
     bearerAuth:
@@ -18,8 +21,9 @@ components:
       bearerFormat: Bearer
       x-swagger-ui:
         name: Authorization
-
+# all apis provided by the backend
 paths:
+  #User signup
   /user/signUp:
     post:
       tags:
@@ -60,6 +64,7 @@ paths:
           description: Conflict- if email is already registered
         "500":
           description: Internal server error
+  #User login
   /user/login:
     post:
       tags:
@@ -95,6 +100,7 @@ paths:
           description: Missing fields
         "500":
           description: Internal server Error
+  #Create new post, Bearer token is required in header
   /post/createPost:
     post:
       security:
@@ -142,6 +148,7 @@ paths:
           description: Missing fields
         "500":
           description: Internal server Error
+  #Get all posts, Bearer token is required in header
   /post/getAllPosts:
     get:
       security:
@@ -149,7 +156,67 @@ paths:
       tags:
         - Blog
       summary: get all posts
-      description: this api will give response of all post with comments and user details
+      description: this api will give response with all post data with posted user details
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unautherized
+        "500":
+          description: Internal server Error
+
+  #Add comment on a post, Bearer token is required in header
+  /post/addComment:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Blog
+      summary: Add comment on a post
+      description: this api is used to post comment on posts
+      requestBody:
+       content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - content
+                - postId
+              properties:
+                content:
+                  type: string
+                  description: The content of the comment
+                  example: This is my comment
+                postId:
+                  type: number
+                  description: Id of the post
+                  example: 1
+      responses:
+        "200":
+          description: Success
+        "404":
+          description: Post not found
+        "409":
+          description: Required fields Missing
+        "500":
+          description: Internal server Error
+          
+  #Get all comments of a post, Bearer token is required in headerß
+  /post/getComments/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Id of the post
+      security:
+        - bearerAuth: []
+      tags:
+        - Blog
+      summary: get Comments
+      description: this api will give response with all comments of the post
       responses:
         "200":
           description: Success

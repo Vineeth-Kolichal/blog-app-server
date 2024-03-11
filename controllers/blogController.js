@@ -61,19 +61,11 @@ const getAllPosts = (req, res) => {
             include: [
                 {
                     model: models.Category,
-                    attributes: ["id","name"]
+                    attributes: ["id", "name"]
                 },
                 {
                     model: models.User,
                     attributes: ['name', 'email']
-                },
-                {
-                    model: models.Comment,
-                    attributes: ["id", "content"],
-                    include: {
-                        model: models.User,
-                        attributes: ['name'],
-                    }
                 },
             ],
             attributes: ["id", "title", "content", "imageUrl"]
@@ -120,16 +112,46 @@ const addComment = (req, res) => {
             });
 
         } catch (error) {
-            res.status(400).json({ message: "error", error: error })
+            res.status(500).json({ message: "Internal server error", error: error })
 
         }
     } else {
-        res.status(400).json({ message: "required fields missing", error: validateResult })
+        res.status(409).json({ message: "required fields missing", error: validateResult })
+    }
+}
+
+const getComments = (req, res) => {
+    const postId = req.params.id
+    try {
+        models.Post.findByPk(postId).then(result => {
+            if (result != null) {
+                models.Comment.findAll({
+                    where: {
+                        postId: postId,
+
+                    },
+                    attributes: ["id", "content"],
+                    include: [{
+                        model: models.User,
+                        attributes: ['name'],
+                    }]
+                }).then(comments => {
+                    res.status(200).json({ comments: comments })
+                })
+            } else {
+                res.status(404).json({ message: "Post not found" })
+            }
+        })
+
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error", error: error })
+
     }
 }
 
 module.exports = {
     createPost,
     getAllPosts,
-    addComment
+    addComment,
+    getComments
 }
