@@ -10,6 +10,15 @@ info:
 servers:
   - url: http://localhost:3000/api
     description: Localhost
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Bearer
+      x-swagger-ui:
+        name: Authorization
+
 paths:
   /user/signUp:
     post:
@@ -46,7 +55,7 @@ paths:
 
       responses:
         "201":
-          description: If user is created successfully
+          description: User is created successfully
         "409":
           description: Conflict- if email is already registered
         "500":
@@ -80,4 +89,71 @@ paths:
       responses:
         "200":
           description: If user logged in successfully
-        
+        "404":
+          description: Provided email is not found in database
+        "409":
+          description: Missing fields
+        "500":
+          description: Internal server Error
+  /post/createPost:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Blog
+      summary: Create new post
+      description: User can create new post with title and content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - content
+                - categoryId
+              properties:
+                title:
+                  type: string
+                  description: The tile of the post
+                  example: This is my title
+                content:
+                  type: string
+                  description: The content of the post
+                  example: This is my content
+                categoryId:
+                  type: number
+                  description: Id of the categoryId
+                  example: 1
+                imageUrl:
+                  type: string
+                  description: image url from the image upload api
+                  example: null
+
+      responses:
+        "201":
+          description: Success
+        "401":
+          description: Unautherized
+        "404":
+          description: Category not found
+        "409":
+          description: Missing fields
+        "500":
+          description: Internal server Error
+  /post/getAllPosts:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Blog
+      summary: get all posts
+      description: this api will give response of all post with comments and user details
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unautherized
+        "500":
+          description: Internal server Error

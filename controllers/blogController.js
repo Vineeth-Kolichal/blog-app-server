@@ -48,7 +48,7 @@ const createPost = (req, res) => {
         })
 
     } else {
-        res.status(400).json({ message: "required fields missing", error: validateResult })
+        res.status(409).json({ message: "required fields missing", error: validateResult })
     }
 
 }
@@ -60,6 +60,10 @@ const getAllPosts = (req, res) => {
             //include data of user from the user table using UserId
             include: [
                 {
+                    model: models.Category,
+                    attributes: ["id","name"]
+                },
+                {
                     model: models.User,
                     attributes: ['name', 'email']
                 },
@@ -70,8 +74,9 @@ const getAllPosts = (req, res) => {
                         model: models.User,
                         attributes: ['name'],
                     }
-                }
+                },
             ],
+            attributes: ["id", "title", "content", "imageUrl"]
         }).then(result => {
             res.status(200).json(result)
         })
