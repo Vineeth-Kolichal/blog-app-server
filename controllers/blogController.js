@@ -75,7 +75,7 @@ const getAllPosts = (req, res) => {
         })
 
     } catch (error) {
-        res.status(500).json({ message: "Internal server error", error: error })
+        serverErrorMessage(res,error)
     }
 }
 
@@ -113,7 +113,7 @@ const addComment = (req, res) => {
             });
 
         } catch (error) {
-            res.status(500).json({ message: "Internal server error", error: error })
+            serverErrorMessage(res,error)
 
         }
     } else {
@@ -145,8 +145,7 @@ const getComments = (req, res) => {
         })
 
     } catch (error) {
-        res.status(500).json({ message: "Internal server error", error: error })
-
+        serverErrorMessage(res,error)
     }
 }
 
@@ -172,12 +171,14 @@ const deletePost=(req,res)=>{
         })
         
     } catch (error) {
-        res.status(500).json({ message: "Internal server error", error: error })
+        serverErrorMessage(res,error)
         
     }
 
 }
-
+function serverErrorMessage(res,error){
+    res.status(500).json({ message: "Internal server error", error: error })
+}
 module.exports = {
     createPost,
     getAllPosts,
