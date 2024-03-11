@@ -23,7 +23,8 @@ Thiis is a sample Backend project developed with Node.js, express.js, MySQL2 wit
     "database": "blogDb",
     "host": "127.0.0.1",
     "dialect": "mysql"
-  },
+  }
+}
 ```
 - Replace user_name and password with your MySQL username and password in ```config.json```
 - Create ```.env``` file in project's root folder and copy&paste follwing lines
