@@ -59,9 +59,14 @@ const getAllPosts = (req, res) => {
         models.Post.findAll({
             //include data of user from the user table using UserId
             include: [
-                { model: models.User, attributes: ['name', 'email'] },
                 {
-                    model: models.Comment, attributes: ["id", "content"], include: {
+                    model: models.User,
+                    attributes: ['name', 'email']
+                },
+                {
+                    model: models.Comment,
+                    attributes: ["id", "content"],
+                    include: {
                         model: models.User,
                         attributes: ['name'],
                     }
