@@ -4,8 +4,12 @@ const Validator = require("fastest-validator");
 const bcrypt = require('bcryptjs')
 const jwt=require("jsonwebtoken");
 const { sendErrorResponse } = require("../helper/errorHelper");
+const dotenv=require("dotenv");
 
-const secret="secret"
+
+dotenv.config()
+
+const secret=process.env.JWT_SECRET;
 const v = new Validator();
 const signUp = (req, res) => {
     const details = {
