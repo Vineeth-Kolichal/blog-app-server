@@ -224,3 +224,28 @@ paths:
           description: Unautherized
         "500":
           description: Internal server Error
+          
+  #to delete a post
+  /post/deletePost/{id}:
+    delete:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Id of the post
+      security:
+        - bearerAuth: []
+      tags:
+        - Blog
+      summary: delete post
+      description: pass post id to delete the post
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unautherized
+        "500":
+          description: Internal server Error
+

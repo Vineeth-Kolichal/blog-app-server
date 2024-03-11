@@ -1,5 +1,6 @@
 const Validator = require("fastest-validator");
 const models = require("../models");
+const { where } = require("sequelize");
 
 const v = new Validator()
 
@@ -149,9 +150,38 @@ const getComments = (req, res) => {
     }
 }
 
+const deletePost=(req,res)=>{
+    const postId=req.params.id;
+    const userId=req.userData.id;
+    try {
+        models.Post.findByPk(postId).then(result=>{
+            if(result!=null){
+                if(result.userId==userId){
+                    models.Post.destroy({where:{
+                        id:postId
+                    }}).then(delResult=>{
+                        res.status(200).json({message:"Post deleted",resp:delResult})
+                    })
+
+                }else{
+                    res.status(409).json({message:"You cannot delete this post"})
+                }
+            }else{
+                res.status(400).json({message:"post not found"})
+            }
+        })
+        
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error", error: error })
+        
+    }
+
+}
+
 module.exports = {
     createPost,
     getAllPosts,
     addComment,
-    getComments
+    getComments,
+    deletePost
 }
