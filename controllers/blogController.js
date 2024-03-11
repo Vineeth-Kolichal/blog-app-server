@@ -1,54 +1,125 @@
-const Validator =require("fastest-validator");
-const models =require("../models");
+const Validator = require("fastest-validator");
+const models = require("../models");
 
-const v=new Validator()
-const createPost=(req,res)=>{
-    const postData={
+const v = new Validator()
+
+//Create new post
+const createPost = (req, res) => {
+    const postData = {
         title: req.body.title,
         content: req.body.content,
         imageUrl: null,
         categoryId: req.body.categoryId,
         userId: req.userData.id
     }
-    const schema={
-        title:{
-            type:"string",
-            optional:false
+    const schema = {
+        title: {
+            type: "string",
+            optional: false
         },
-        content:{
-            type:"string",
-            optional:false
+        content: {
+            type: "string",
+            optional: false
         },
-        imageUrl:{
-            type:"string",
-            optional:true
+        imageUrl: {
+            type: "string",
+            optional: true
         },
-        categoryId:{
-            type:"integer",
-            optional:false
+        categoryId: {
+            type: "number",
+            optional: false
         },
-        userId:{
-            type:"integer",
-            optional:false
+        userId: {
+            type: "number",
+            optional: false
         }
     }
-
-   const validateResult= v.validate(postData,schema);
-   if(validateResult==true){
-        models.Category.findByPk(postData.categoryId).then(result=>{
-            if(result!=null){
-                models.Post.create(postData).then(resu=>{
-                    res.status(201).json({message:"post created",post:resu})
+    //Validating the request body
+    const validateResult = v.validate(postData, schema);
+    if (validateResult == true) {
+        models.Category.findByPk(postData.categoryId).then(result => {
+            if (result != null) {
+                models.Post.create(postData).then(resu => {
+                    res.status(201).json({ message: "post created", post: resu })
                 })
-            }else{
-                res.status(404).json({message:"category not found"});
+            } else {
+                res.status(404).json({ message: "category not found" });
             }
         })
 
-   }else{
-    res.status(400).json({message:"required fields missing",error:validateResult})
-   }
+    } else {
+        res.status(400).json({ message: "required fields missing", error: validateResult })
+    }
 
 }
 
-module.exports={createPost}
+//Get all post
+const getAllPosts = (req, res) => {
+    try {
+        models.Post.findAll({
+            //include data of user from the user table using UserId
+            include: [
+                { model: models.User, attributes: ['name', 'email'] },
+                {
+                    model: models.Comment, attributes: ["id", "content"], include: {
+                        model: models.User,
+                        attributes: ['name'],
+                    }
+                }
+            ],
+        }).then(result => {
+            res.status(200).json(result)
+        })
+
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error", error: error })
+    }
+}
+
+const addComment = (req, res) => {
+    const comment = {
+        content: req.body.content,
+        postId: req.body.postId,
+        userId: req.userData.id
+    }
+    const schema = {
+        content: {
+            type: "string",
+            optional: false
+        },
+        postId: {
+            type: "number",
+            optional: false
+        },
+        userId: {
+            type: "number",
+            optional: false
+        }
+    }
+    const validateResult = v.validate(comment, schema);
+    if (validateResult == true) {
+        try {
+            models.Post.findByPk(comment.postId).then(result => {
+                if (result != null) {
+                    models.Comment.create(comment).then(resu => {
+                        res.status(200).json({ message: "Comment added successfully", comment: resu })
+                    })
+                } else {
+                    res.status(404).json({ message: "Post not found" })
+                }
+            });
+
+        } catch (error) {
+            res.status(400).json({ message: "error", error: error })
+
+        }
+    } else {
+        res.status(400).json({ message: "required fields missing", error: validateResult })
+    }
+}
+
+module.exports = {
+    createPost,
+    getAllPosts,
+    addComment
+}

@@ -11,6 +11,8 @@ dotenv.config()
 
 const secret=process.env.JWT_SECRET;
 const v = new Validator();
+
+// user signup
 const signUp = (req, res) => {
     const details = {
         name: req.body.name,
@@ -64,6 +66,7 @@ const signUp = (req, res) => {
 
 }
 
+//user login
 const login=(req,res)=>{
     const credentials={
         email:req.body.email,
