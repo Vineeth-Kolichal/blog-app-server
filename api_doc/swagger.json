@@ -1,461 +1,461 @@
 {
     "openapi": "3.0.0",
     "info": {
-      "title": "Blog app api",
-      "description": "This is a sample project with Node.js, express, MySql2, Sequelize",
-      "version": "1.0.0",
-      "contact": {
-        "name": "Vineeth Chandran",
-        "email": "vineethchandran5898@gmail.com",
-        "url": "https://vineethchandran.live"
-      }
+        "title": "Blog app api",
+        "description": "This is a sample project with Node.js, express, MySql2, Sequelize",
+        "version": "1.0.0",
+        "contact": {
+            "name": "Vineeth Chandran",
+            "email": "vineethchandran5898@gmail.com",
+            "url": "https://vineethchandran.live"
+        }
     },
     "servers": [
-      {
-        "url": "http://localhost:3000/api",
-        "description": "Localhost"
-      }
+        {
+            "url": "http://localhost:3000/api",
+            "description": "Localhost"
+        }
     ],
     "components": {
-      "securitySchemes": {
-        "bearerAuth": {
-          "type": "http",
-          "scheme": "bearer",
-          "bearerFormat": "Bearer",
-          "x-swagger-ui": {
-            "name": "Authorization"
-          }
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "Bearer",
+                "x-swagger-ui": {
+                    "name": "Authorization"
+                }
+            }
         }
-      }
     },
     "paths": {
-      "/user/signUp": {
-        "post": {
-          "tags": [
-            "User Auth"
-          ],
-          "summary": "SignUp new user",
-          "consumes": [
-            "application/json"
-          ],
-          "description": "provide full name, email and password as body",
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "name",
-                    "email",
-                    "password"
-                  ],
-                  "properties": {
-                    "name": {
-                      "type": "string",
-                      "description": "The user's full name",
-                      "example": "Vineeth Chandran"
-                    },
-                    "email": {
-                      "type": "string",
-                      "description": "The user's email address",
-                      "format": "email",
-                      "example": "vineeth@gmail.com"
-                    },
-                    "password": {
-                      "type": "string",
-                      "description": "The user's password",
-                      "example": "vineeth1234"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "201": {
-              "description": "User is created successfully"
-            },
-            "409": {
-              "description": "Conflict- if email is already registered"
-            },
-            "500": {
-              "description": "Internal server error"
-            }
-          }
-        }
-      },
-      "/user/login": {
-        "post": {
-          "tags": [
-            "User Auth"
-          ],
-          "summary": "Login with credential",
-          "description": "user can login using emailid and password",
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "email",
-                    "password"
-                  ],
-                  "properties": {
-                    "email": {
-                      "type": "string",
-                      "description": "The user's email address",
-                      "format": "email",
-                      "example": "vineeth@gmail.com"
-                    },
-                    "password": {
-                      "type": "string",
-                      "description": "The user's password",
-                      "example": "vineeth1234"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "If user logged in successfully"
-            },
-            "404": {
-              "description": "Provided email is not found in database"
-            },
-            "409": {
-              "description": "Missing fields"
-            },
-            "500": {
-              "description": "Internal server Error"
-            }
-          }
-        }
-      },
-      "/post/createPost": {
-        "post": {
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "tags": [
-            "Blog"
-          ],
-          "summary": "Create new post",
-          "description": "User can create new post with title and content",
-          "requestBody": {
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "title",
-                    "content",
-                    "categoryId"
-                  ],
-                  "properties": {
-                    "title": {
-                      "type": "string",
-                      "description": "The tile of the post",
-                      "example": "This is my title"
-                    },
+        "/user/signUp": {
+            "post": {
+                "tags": [
+                    "User Auth"
+                ],
+                "summary": "SignUp new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "provide full name, email and password as body",
+                "requestBody": {
+                    "required": true,
                     "content": {
-                      "type": "string",
-                      "description": "The content of the post",
-                      "example": "This is my content"
-                    },
-                    "categoryId": {
-                      "type": "number",
-                      "description": "Id of the categoryId",
-                      "example": 1
-                    },
-                    "imageUrl": {
-                      "type": "string",
-                      "description": "image url from the image upload api",
-                      "example": null
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "The user's full name",
+                                        "example": "Vineeth Chandran"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "The user's email address",
+                                        "format": "email",
+                                        "example": "vineeth@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "The user's password",
+                                        "example": "vineeth1234"
+                                    }
+                                }
+                            }
+                        }
                     }
-                  }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User is created successfully"
+                    },
+                    "409": {
+                        "description": "Conflict- if email is already registered"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
                 }
-              }
             }
-          },
-          "responses": {
-            "201": {
-              "description": "Success"
-            },
-            "401": {
-              "description": "Unautherized"
-            },
-            "404": {
-              "description": "Category not found"
-            },
-            "409": {
-              "description": "Missing fields"
-            },
-            "500": {
-              "description": "Internal server Error"
-            }
-          }
-        }
-      },
-      "/post/getAllPosts": {
-        "get": {
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "tags": [
-            "Blog"
-          ],
-          "summary": "get all posts",
-          "description": "this api will give response with all post data with posted user details",
-          "responses": {
-            "200": {
-              "description": "Success"
-            },
-            "401": {
-              "description": "Unautherized"
-            },
-            "500": {
-              "description": "Internal server Error"
-            }
-          }
-        }
-      },
-      "/post/addComment": {
-        "post": {
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "tags": [
-            "Blog"
-          ],
-          "summary": "Add comment on a post",
-          "description": "this api is used to post comment on posts",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "content",
-                    "postId"
-                  ],
-                  "properties": {
+        },
+        "/user/login": {
+            "post": {
+                "tags": [
+                    "User Auth"
+                ],
+                "summary": "Login with credential",
+                "description": "user can login using emailid and password",
+                "requestBody": {
+                    "required": true,
                     "content": {
-                      "type": "string",
-                      "description": "The content of the comment",
-                      "example": "This is my comment"
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "description": "The user's email address",
+                                        "format": "email",
+                                        "example": "vineeth@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "The user's password",
+                                        "example": "vineeth1234"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "If user logged in successfully"
                     },
-                    "postId": {
-                      "type": "number",
-                      "description": "Id of the post",
-                      "example": 1
+                    "404": {
+                        "description": "Provided email is not found in database"
+                    },
+                    "409": {
+                        "description": "Missing fields"
+                    },
+                    "500": {
+                        "description": "Internal server Error"
                     }
-                  }
                 }
-              }
             }
-          },
-          "responses": {
-            "200": {
-              "description": "Success"
-            },
-            "404": {
-              "description": "Post not found"
-            },
-            "409": {
-              "description": "Required fields Missing"
-            },
-            "500": {
-              "description": "Internal server Error"
-            }
-          }
-        }
-      },
-      "/post/getComments/{id}": {
-        "get": {
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "schema": {
-                "type": "integer"
-              },
-              "required": true,
-              "description": "Id of the post"
-            }
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "tags": [
-            "Blog"
-          ],
-          "summary": "get Comments",
-          "description": "this api will give response with all comments of the post",
-          "responses": {
-            "200": {
-              "description": "Success"
-            },
-            "401": {
-              "description": "Unautherized"
-            },
-            "500": {
-              "description": "Internal server Error"
-            }
-          }
-        }
-      },
-      "/post/deletePost/{id}": {
-        "delete": {
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "schema": {
-                "type": "integer"
-              },
-              "required": true,
-              "description": "Id of the post"
-            }
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "tags": [
-            "Blog"
-          ],
-          "summary": "delete post",
-          "description": "pass post id to delete the post",
-          "responses": {
-            "200": {
-              "description": "Success"
-            },
-            "401": {
-              "description": "Unautherized"
-            },
-            "500": {
-              "description": "Internal server Error"
-            }
-          }
-        }
-      },
-      "/image/upload": {
-        "post": {
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "tags": [
-            "Image"
-          ],
-          "summary": "Upload image",
-          "description": "Use this end point to upload image as form data",
-          "requestBody": {
-            "content": {
-              "multipart/form-data": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "image": {
-                      "type": "string",
-                      "format": "binary"
+        },
+        "/post/createPost": {
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
                     }
-                  }
+                ],
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Create new post",
+                "description": "User can create new post with title and content",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "title",
+                                    "content",
+                                    "categoryId"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "description": "The tile of the post",
+                                        "example": "This is my title"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "description": "The content of the post",
+                                        "example": "This is my content"
+                                    },
+                                    "categoryId": {
+                                        "type": "number",
+                                        "description": "Id of the categoryId",
+                                        "example": 1
+                                    },
+                                    "imageUrl": {
+                                        "type": "string",
+                                        "description": "image url from the image upload api",
+                                        "example": null
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unautherized"
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    },
+                    "409": {
+                        "description": "Missing fields"
+                    },
+                    "500": {
+                        "description": "Internal server Error"
+                    }
                 }
-              }
             }
-          },
-          "responses": {
-            "200": {
-              "description": "Success"
-            },
-            "401": {
-              "description": "Unautherized"
-            },
-            "500": {
-              "description": "Internal server Error"
+        },
+        "/post/getAllPosts": {
+            "get": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "get all posts",
+                "description": "this api will give response with all post data with posted user details",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unautherized"
+                    },
+                    "500": {
+                        "description": "Internal server Error"
+                    }
+                }
             }
-          }
+        },
+        "/post/addComment": {
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Add comment on a post",
+                "description": "this api is used to post comment on posts",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "content",
+                                    "postId"
+                                ],
+                                "properties": {
+                                    "content": {
+                                        "type": "string",
+                                        "description": "The content of the comment",
+                                        "example": "This is my comment"
+                                    },
+                                    "postId": {
+                                        "type": "number",
+                                        "description": "Id of the post",
+                                        "example": 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Post not found"
+                    },
+                    "409": {
+                        "description": "Required fields Missing"
+                    },
+                    "500": {
+                        "description": "Internal server Error"
+                    }
+                }
+            }
+        },
+        "/post/getComments/{id}": {
+            "get": {
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "description": "Id of the post"
+                    }
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "get Comments",
+                "description": "this api will give response with all comments of the post",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unautherized"
+                    },
+                    "500": {
+                        "description": "Internal server Error"
+                    }
+                }
+            }
+        },
+        "/post/deletePost/{id}": {
+            "delete": {
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "description": "Id of the post"
+                    }
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "delete post",
+                "description": "pass post id to delete the post",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unautherized"
+                    },
+                    "500": {
+                        "description": "Internal server Error"
+                    }
+                }
+            }
+        },
+        "/image/upload": {
+            "post": {
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "Image"
+                ],
+                "summary": "Upload image",
+                "description": "Use this end point to upload image as form data",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unautherized"
+                    },
+                    "500": {
+                        "description": "Internal server Error"
+                    }
+                }
+            }
+        },
+        "/uploads/{imagePath}": {
+            "get": {
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "imagePath",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "imagePath"
+                    }
+                ],
+                "tags": [
+                    "Image"
+                ],
+                "summary": "To show image",
+                "description": "Pass image path got from image upload api",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "500": {
+                        "description": "Internal server Error"
+                    }
+                }
+            }
+        },
+        "/post/deleteComment/{id}": {
+            "delete": {
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "description": "Id of the comment"
+                    }
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "delete comment",
+                "description": "pass commentId to delete the Comment",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Unautherized"
+                    },
+                    "500": {
+                        "description": "Internal server Error"
+                    }
+                }
+            }
         }
-      },
-      "/uploads/{imagePath}": {
-        "get": {
-          "parameters": [
-            {
-              "in": "path",
-              "name": "imagePath",
-              "schema": {
-                "type": "string"
-              },
-              "required": true,
-              "description": "imagePath"
-            }
-          ],
-          "tags": [
-            "Image"
-          ],
-          "summary": "To show image",
-          "description": "Pass image path got from image upload api",
-          "responses": {
-            "200": {
-              "description": "Success"
-            },
-            "500": {
-              "description": "Internal server Error"
-            }
-          }
-        }
-      },
-      "/post/deleteComment/{id}": {
-        "delete": {
-          "parameters": [
-            {
-              "in": "path",
-              "name": "id",
-              "schema": {
-                "type": "integer"
-              },
-              "required": true,
-              "description": "Id of the comment"
-            }
-          ],
-          "security": [
-            {
-              "bearerAuth": []
-            }
-          ],
-          "tags": [
-            "Blog"
-          ],
-          "summary": "delete comment",
-          "description": "pass commentId to delete the Comment",
-          "responses": {
-            "200": {
-              "description": "Success"
-            },
-            "401": {
-              "description": "Unautherized"
-            },
-            "500": {
-              "description": "Internal server Error"
-            }
-          }
-        }
-      }
     }
-  }
+}
