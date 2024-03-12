@@ -75,10 +75,11 @@ const getAllPosts = (req, res) => {
         })
 
     } catch (error) {
-        serverErrorMessage(res,error)
+        serverErrorMessage(res, error)
     }
 }
 
+// Add comment on a post 
 const addComment = (req, res) => {
     const comment = {
         content: req.body.content,
@@ -99,6 +100,7 @@ const addComment = (req, res) => {
             optional: false
         }
     }
+    //validating request body structure.
     const validateResult = v.validate(comment, schema);
     if (validateResult == true) {
         try {
@@ -113,7 +115,7 @@ const addComment = (req, res) => {
             });
 
         } catch (error) {
-            serverErrorMessage(res,error)
+            serverErrorMessage(res, error)
 
         }
     } else {
@@ -121,6 +123,7 @@ const addComment = (req, res) => {
     }
 }
 
+// this fuction is used to get all comments of the post using post ID
 const getComments = (req, res) => {
     const postId = req.params.id
     try {
@@ -129,7 +132,6 @@ const getComments = (req, res) => {
                 models.Comment.findAll({
                     where: {
                         postId: postId,
-
                     },
                     attributes: ["id", "content"],
                     include: [{
@@ -145,40 +147,46 @@ const getComments = (req, res) => {
         })
 
     } catch (error) {
-        serverErrorMessage(res,error)
+        serverErrorMessage(res, error)
     }
 }
 
-const deletePost=(req,res)=>{
-    const postId=req.params.id;
-    const userId=req.userData.id;
+// this fuction is for deleting post using id of the post
+const deletePost = (req, res) => {
+    const postId = req.params.id;
+    const userId = req.userData.id;
     try {
-        models.Post.findByPk(postId).then(result=>{
-            if(result!=null){
-                if(result.userId==userId){
-                    models.Post.destroy({where:{
-                        id:postId
-                    }}).then(delResult=>{
-                        res.status(200).json({message:"Post deleted",resp:delResult})
+        models.Post.findByPk(postId).then(result => {
+            if (result != null) {
+                if (result.userId == userId) {
+                    models.Post.destroy({
+                        where: {
+                            id: postId
+                        }
+                    }).then(delResult => {
+                        res.status(200).json({ message: "Post deleted", resp: delResult })
                     })
 
-                }else{
-                    res.status(409).json({message:"You cannot delete this post"})
+                } else {
+                    res.status(409).json({ message: "You cannot delete this post" })
                 }
-            }else{
-                res.status(400).json({message:"post not found"})
+            } else {
+                res.status(400).json({ message: "post not found" })
             }
         })
-        
+
     } catch (error) {
-        serverErrorMessage(res,error)
-        
+        serverErrorMessage(res, error)
+
     }
 
 }
-function serverErrorMessage(res,error){
+// this fuction is used to send error response to client
+function serverErrorMessage(res, error) {
     res.status(500).json({ message: "Internal server error", error: error })
 }
+
+//export
 module.exports = {
     createPost,
     getAllPosts,
