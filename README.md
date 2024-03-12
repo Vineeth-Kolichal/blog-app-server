@@ -35,7 +35,6 @@ npm install
 ```
 NODE_ENV=development
 JWT_SECRET=secret
-
 ```
 - You can use your own secret key for JWT (optional)
 - Open the VSCode integrated terminal and run the following command one by one
@@ -50,6 +49,8 @@ sequelize db:seed:all
 npm start
 ```
 - To get swagger api documentation open the following url in your browser
-    ``` http://localhost:3000/api/documentation ```
+```
+http://localhost:3000/api/documentation
+```
 
 
