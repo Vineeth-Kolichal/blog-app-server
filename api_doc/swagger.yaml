@@ -248,4 +248,49 @@ paths:
           description: Unautherized
         "500":
           description: Internal server Error
+   #to Upload image
+  /image/upload:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Image
+      summary: Upload image
+      description: Use this end point to upload image as form data
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unautherized
+        "500":
+          description: Internal server Error
+  /uploads/{imagePath}:
+    get:
+      parameters:
+        - in: path
+          name: imagePath
+          schema:
+            type: string
+          required: true
+          description: imagePath
+      security:
+        - bearerAuth: []
+      tags:
+        - Image
+      summary: To show image
+      description: Pass image path got from image upload api
+      responses:
+        "200":
+          description: Success
+        "500":
+          description: Internal server Error 
 
