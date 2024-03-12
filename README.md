@@ -35,12 +35,8 @@ JWT_SECRET=secret
 ```
 - You can use your own secret key for JWT (optional)
 - Open the VSCode integrated terminal and run the following command one by one
-    - ```cmd
-    sequelize db:migrate
-    ```
-    - ```cmd
-    sequelize db:seed:all
-    ```
+    - ```sequelize db:migrate```
+    - ```sequelize db:seed:all```
 - Run the server using follwing command
     - ``` npm start```
 - To get swagger api documentation open the following url in your browser
