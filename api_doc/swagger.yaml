@@ -251,6 +251,8 @@ paths:
    #to Upload image
   /image/upload:
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Image
       summary: Upload image
@@ -271,6 +273,7 @@ paths:
           description: Unautherized
         "500":
           description: Internal server Error
+  #To show image use this endpoint
   /uploads/{imagePath}:
     get:
       parameters:
@@ -280,8 +283,6 @@ paths:
             type: string
           required: true
           description: imagePath
-      security:
-        - bearerAuth: []
       tags:
         - Image
       summary: To show image
