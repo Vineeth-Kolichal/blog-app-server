@@ -15,7 +15,7 @@ npm install -g sequelize-cli
         
 - Clone this repository to your local machine and open in VSCode and run the follwing command in VSCode integrated terminal
 ```bash
- npm install
+npm install
 ```
 - Create Database named "blogDb" in MySQL (by using terminal or workbench)
 - Create ```config.json``` file in ```/config/ ```folder and copy & paste following code
@@ -47,7 +47,7 @@ sequelize db:seed:all
 ```
 - Run the server using follwing command
 ```bash
- npm start
+npm start
 ```
 - To get swagger api documentation open the following url in your browser
     ``` http://localhost:3000/api/documentation ```
