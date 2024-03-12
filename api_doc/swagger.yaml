@@ -292,4 +292,26 @@ paths:
           description: Success
         "500":
           description: Internal server Error 
+  /post/deleteComment/{id}:
+    delete:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Id of the comment
+      security:
+        - bearerAuth: []
+      tags:
+        - Blog
+      summary: delete comment
+      description: pass commentId to delete the Comment
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unautherized
+        "500":
+          description: Internal server Error
 

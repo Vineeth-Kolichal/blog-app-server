@@ -136,7 +136,7 @@ const getComments = (req, res) => {
                     attributes: ["id", "content"],
                     include: [{
                         model: models.User,
-                        attributes: ['name'],
+                        attributes: ['name','id'],
                     }]
                 }).then(comments => {
                     res.status(200).json({ comments: comments })
@@ -181,6 +181,29 @@ const deletePost = (req, res) => {
     }
 
 }
+
+const deleteComment=(req,res)=>{
+    const commentId=req.params.id;
+    models.Comment.findByPk(commentId).then(comment=>{
+        if(comment!=null){
+            models.Comment.destroy({
+                where:{
+                    id:commentId
+                }
+            }).then(result=>{
+                if(result){
+                    res.status(200).json({message:"Comment deleted"})
+                }else{
+                    res.status(400).json({message:"Failed to delete comment"})
+                }
+            })
+
+        }else{
+            res.status(404).json({message:"Comment not found"});
+        }
+    })
+
+}
 // this fuction is used to send error response to client
 function serverErrorMessage(res, error) {
     res.status(500).json({ message: "Internal server error", error: error })
@@ -192,5 +215,6 @@ module.exports = {
     getAllPosts,
     addComment,
     getComments,
-    deletePost
+    deletePost,
+    deleteComment
 }
