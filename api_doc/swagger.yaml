@@ -251,8 +251,6 @@ paths:
    #to Upload image
   /image/upload:
     post:
-      security:
-        - bearerAuth: []
       tags:
         - Image
       summary: Upload image
