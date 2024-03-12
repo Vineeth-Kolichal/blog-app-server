@@ -9,10 +9,14 @@ Thiis is a sample Backend project developed with Node.js, express.js, MySQL2 wit
 - Install MySQL 
 - Install MySQL workbench (optional)
 - Install Sequelize CLI using command
-    - ``` npm install -g sequelize-cli```
+```cmd
+npm install -g sequelize-cli
+```
         
 - Clone this repository to your local machine and open in VSCode and run the follwing command in VSCode integrated terminal
-    - ``` npm install ```
+```cmd
+ npm install
+```
 - Create Database named "blogDb" in MySQL (by using terminal or workbench)
 - Create ```config.json``` file in ```/config/ ```folder and copy & paste following code
 ```json
@@ -42,7 +46,9 @@ sequelize db:migrate
 sequelize db:seed:all
 ```
 - Run the server using follwing command
-    - ``` npm start```
+```cmd
+ npm start
+```
 - To get swagger api documentation open the following url in your browser
     ``` http://localhost:3000/api/documentation ```
 
