@@ -10,6 +10,7 @@ postRoute.get("/getAllPosts",verifyToken,getAllPosts);
 postRoute.post("/addComment",verifyToken,addComment)
 postRoute.get("/getComments/:id",verifyToken,getComments);
 postRoute.delete("/deletePost/:id",verifyToken,deletePost)
+postRoute.post("/uploadImage",verifyToken);
 
 
 module.exports=postRoute;
